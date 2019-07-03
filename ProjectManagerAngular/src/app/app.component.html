@@ -1,0 +1,20 @@
+<title>Task Manager</title>
+<h1 style="text-align: center">Welcome to TaskManager!</h1>
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+  <mdb-navbar-brand><a class="navbar-brand" href="#">Task Manager</a></mdb-navbar-brand>
+  <links>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a routerLink="/AddTask"  class="nav-link waves-light" mdbWavesEffect>Add Task</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a routerLink="/ViewTask"  class="nav-link waves-light" mdbWavesEffect>View Task</a>
+      </li>
+    </ul>
+  </links>
+</mdb-navbar>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
