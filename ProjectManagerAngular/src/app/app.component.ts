@@ -8,9 +8,9 @@ import { NgSelectConfig } from '@ng-select/ng-select';
 })
 export class AppComponent {
 
-  title = 'TaskManager';
+  title = 'Project Manager';
 
-  constructor(private config: NgSelectConfig) {
-    this.config.notFoundText = 'Task not found';
+  constructor() {
+    
   }
 }
