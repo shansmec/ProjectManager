@@ -27,13 +27,7 @@ export class AddUserComponent implements OnInit {
 
   }
 
-  elements: any = [
-    { id: 1, first: 'Mark', last: 'Otto', handle: '@mdo' },
-    { id: 2, first: 'Jacob', last: 'Thornton', handle: '@fat' },
-    { id: 3, first: 'Larry', last: 'the Bird', handle: '@twitter' },
-  ];
-
-  headers = ['Employee Id', 'First Name', 'Last Name', '#'];
+  headers = ['First Name', 'Last Name','Employee Id', '#'];
 
   getUserDetails(userId: any) {
     this._taskService.getUser(parseInt(userId)).subscribe(

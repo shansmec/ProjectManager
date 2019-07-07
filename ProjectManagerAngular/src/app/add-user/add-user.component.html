@@ -103,7 +103,7 @@
       </thead>
       <tbody>
           <tr *ngFor="let user of availableUsers">
-              <th class="hidden">{{user.UserId}}</th>
+              <th style='display: none;' class="hidden">{{user.UserId}}</th>
               <th scope="row">{{user.FirstName}}</th>
               <th scope="row">{{user.LastName}}</th>
               <th scope="row">{{user.EmployeeId}}</th>

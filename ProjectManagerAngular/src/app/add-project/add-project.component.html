@@ -7,13 +7,23 @@
     <!-- Horizontal material form -->
     <form>
       <!-- Grid row -->
+      <div style='display: none' class="form-group row">
+        <!-- Material input -->
+        <label for="txtProjectName" class="col-sm-2 col-form-label font-weight-bold">Project Id</label>
+        <div class="col-sm-10">
+          <div class="md-form mt-0">
+            <input mdbInput [(ngModel)]="addProject.ProjectId" placeholder="Project Name" type="text"
+              class="form-control" id="txtProjectName" name="project.ProjectId">
+          </div>
+        </div>
+      </div>
       <div class="form-group row">
         <!-- Material input -->
         <label for="txtProjectName" class="col-sm-2 col-form-label font-weight-bold">Project Name</label>
         <div class="col-sm-10">
           <div class="md-form mt-0">
-            <input mdbInput [(ngModel)]="project.projectName" placeholder="Project Name" type="text"
-              class="form-control" id="txtProjectName" name="project.projectName">
+            <input mdbInput [(ngModel)]="addProject.Name" placeholder="Project Name" type="text" class="form-control"
+              id="txtProjectName" name="project.projectName">
           </div>
         </div>
       </div>
@@ -22,15 +32,15 @@
         <label for="txtStartDate" class="col-sm-2 col-form-label font-weight-bold">Start Date</label>
         <div class="col-sm-3">
           <div class="md-form mt-0">
-            <input mdbInput [(ngModel)]="project.startDate" placeholder="Start Date " type="date" class="form-control"
+            <input mdbInput [(ngModel)]="start" placeholder="Start Date " type="date" class="form-control"
               id="txtStartDate" name="project.startDate">
           </div>
         </div>
         <label for="txtEndDate" class="col-sm-2 col-form-label font-weight-bold">End Date</label>
         <div class="col-sm-3">
           <div class="md-form mt-0">
-            <input mdbInput [(ngModel)]="project.endDate" placeholder="End Date" type="date" class="form-control"
-              id="txtEndDate" name="project.endDate">
+            <input mdbInput [(ngModel)]="end" placeholder="End Date" type="date" class="form-control" id="txtEndDate"
+              name="project.endDate">
           </div>
         </div>
       </div>
@@ -38,7 +48,7 @@
         <!-- Material input -->
         <label for="txtEmployeeId" class="col-sm-2 col-form-label font-weight-bold">Priority</label>
         <div class="col-sm-8">
-          <ng5-slider [(value)]="project.priority" [options]="options" name="Priority"></ng5-slider>
+          <ng5-slider [(value)]="addProject.Priority" [options]="options" name="Priority"></ng5-slider>
         </div>
       </div>
       <div class="form-group row">
@@ -46,15 +56,19 @@
         <label for="txtManagerName" class="col-sm-2 col-form-label font-weight-bold">Manager Name</label>
         <div class="col-sm-10">
           <div class="md-form mt-0">
-            <input mdbInput [(ngModel)]="project.managerName" placeholder="Manager Name" type="text"
-              class="form-control" id="txtManagerName" name="project.managerName">
+            <select name="manager" [(ngModel)]="addProject.ManagerId" class="form-control" id="name">
+              <option selected="" value=""></option>
+              <option [ngValue]="pt.UserId" *ngFor="let pt of availableUsers">
+                {{pt.FirstName}} {{pt.LastName}}
+              </option>
+            </select>
           </div>
         </div>
       </div>
       <!-- Grid row -->
       <div class="form-group row text-center">
         <div class="col-sm-10">
-          <button type="submit" class="btn btn-primary btn-md">
+          <button type="submit" class="btn btn-primary btn-md" (click)="updateProject()">
             <mdb-icon fas icon="save"></mdb-icon> Add Project
           </button>
           <button type="submit" class="btn btn-danger btn-md" (click)="reset()">
@@ -79,16 +93,21 @@
       <div class="col">
         <!-- Material input -->
         <div class="md-form mt-0">
-          <input mdbInput type="text" class="form-control" placeholder="Project Name">
+          <input [(ngModel)]="projectSearch.Name" mdbInput type="text" class="form-control" placeholder="Project Name">
         </div>
       </div>
-      <!-- Grid column -->
-
-      <!-- Grid column -->
       <div class="col">
         <!-- Material input -->
         <div class="md-form mt-0">
-          <input mdbInput type="text" class="form-control" placeholder="Prioriy">
+          <input [(ngModel)]="projectSearch.PriorityFrom" mdbInput type="number" class="form-control"
+            placeholder="Prioriy From">
+        </div>
+      </div>
+      <div class="col">
+        <!-- Material input -->
+        <div class="md-form mt-0">
+          <input [(ngModel)]="projectSearch.PriorityTo" mdbInput type="number" class="form-control"
+            placeholder="Prioriy To">
         </div>
       </div>
       <div class="col">
@@ -97,10 +116,28 @@
           <input mdbInput type="text" class="form-control" placeholder="Manager Name ">
         </div>
       </div>
+      <!-- Grid column -->
+    </div>
+    <div class="row">
+      <!-- Grid column -->
       <div class="col">
         <!-- Material input -->
         <div class="md-form mt-0">
-          <button type="submit" class="btn btn-primary btn-md">
+          <input [(ngModel)]="projectSearch.StartDate" mdbInput type="date" class="form-control"
+            placeholder="Project Name">
+        </div>
+      </div>
+      <div class="col">
+        <!-- Material input -->
+        <div class="md-form mt-0">
+          <input [(ngModel)]="projectSearch.EndDate" mdbInput type="date" class="form-control"
+            placeholder="Prioriy From">
+        </div>
+      </div>
+      <div class="col">
+        <!-- Material input -->
+        <div class="md-form mt-0">
+          <button type="submit" class="btn btn-primary btn-md" (click)="searchProjects()">
             <mdb-icon fas icon="search"></mdb-icon>Search
           </button>
         </div>
@@ -113,19 +150,40 @@
       <div class="col-sm-10">
         <div class="md-form mt-0">
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect>Project Name
-            <mdb-icon fas icon="arrows-alt-v"></mdb-icon></button>
-            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect>Priority <mdb-icon fas
-                icon="arrows-alt-v"></mdb-icon></button>
-            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect>Manager Name <mdb-icon fas
-                icon="arrows-alt-v"></mdb-icon></button>
+            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect
+              (click)="SortByName()">Project Name
+              <mdb-icon fas icon="arrows-alt-v"></mdb-icon></button>
+            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect
+              (click)="SortByPriority()">Priority <mdb-icon fas icon="arrows-alt-v"></mdb-icon></button>
+            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect
+              (click)="SortByStartDate()">Start Date<mdb-icon fas icon="arrows-alt-v"></mdb-icon></button>
+            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect
+              (click)="SortByEndDate()">End Date <mdb-icon fas icon="arrows-alt-v"></mdb-icon></button>
           </div>
         </div>
       </div>
     </div>
     <table mdbTable>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Priority</th>
+          <th>Start</th>
+          <th>End</th>
+        </tr>
+      </thead>
       <tbody>
-
+        <tr *ngFor="let project of availableProjects">
+          <td class="hidden">{{project.ProjectId}}</td>
+          <td>{{project.Name}}</td>
+          <td>{{project.Priority}}</td>
+          <td>{{project.StartDate}}</td>
+          <td>{{project.EndDate}}</td>
+          <td>
+            <button (click)="editProject(project)" class="btn btn-info">Update</button>
+            <button (click)="deleteProject(project)" style="margin-left: 20px;" class="btn btn-info">Suspend</button>
+          </td>
+        </tr>
       </tbody>
     </table>
   </mdb-card-body>
