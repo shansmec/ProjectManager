@@ -70,4 +70,5 @@ export class AddTaskComponent implements OnInit {
       }
     );
   }
+  reset(){}
 }

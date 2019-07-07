@@ -12,7 +12,7 @@
         <label for="txtProjectName" class="col-sm-2 col-form-label font-weight-bold">Project Name</label>
         <div class="col-sm-10">
           <div class="md-form mt-0">
-            <input mdbInput [(ngModel)]="project.ProjectName" placeholder="Project Name" type="text"
+            <input mdbInput [(ngModel)]="project.projectName" placeholder="Project Name" type="text"
               class="form-control" id="txtProjectName" name="project.projectName">
           </div>
         </div>
@@ -54,7 +54,7 @@
       <!-- Grid row -->
       <div class="form-group row text-center">
         <div class="col-sm-10">
-          <button type="submit" class="btn btn-primary btn-md" (click)="addProject()">
+          <button type="submit" class="btn btn-primary btn-md">
             <mdb-icon fas icon="save"></mdb-icon> Add Project
           </button>
           <button type="submit" class="btn btn-danger btn-md" (click)="reset()">
@@ -113,36 +113,19 @@
       <div class="col-sm-10">
         <div class="md-form mt-0">
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect
-              (click)="sortUser('ProjectName')">Project Name <mdb-icon fas icon="arrows-alt-v"></mdb-icon></button>
-            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect
-              (click)="sortUser('Priority')">Priority <mdb-icon fas icon="arrows-alt-v"></mdb-icon></button>
-            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect
-              (click)="sortUser('ManagerName')">Manager Name <mdb-icon fas icon="arrows-alt-v"></mdb-icon></button>
+            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect>Project Name
+            <mdb-icon fas icon="arrows-alt-v"></mdb-icon></button>
+            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect>Priority <mdb-icon fas
+                icon="arrows-alt-v"></mdb-icon></button>
+            <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect>Manager Name <mdb-icon fas
+                icon="arrows-alt-v"></mdb-icon></button>
           </div>
         </div>
       </div>
     </div>
     <table mdbTable>
-      <thead class="blue white-text">
-        <tr>
-          <th *ngFor="let head of headers" scope="col">{{head}} </th>
-        </tr>
-      </thead>
       <tbody>
-        <tr mdbTableCol *ngFor="let el of elements">
-          <th scope="row">{{el.id}}</th>
-          <th scope="row">{{el.first}}</th>
-          <th scope="row">{{el.last}}</th>
-          <th scope="row">
-            <button type="submit" class="btn btn-primary btn-md" (click)="editUser(el)">
-              <mdb-icon fas icon="edit"></mdb-icon> Edit
-            </button>
-            <button type="submit" class="btn btn-primary btn-md" (click)="deleteUser(el)">
-              <mdb-icon fas icon="trash-alt"></mdb-icon> Delete
-            </button>
-          </th>
-        </tr>
+
       </tbody>
     </table>
   </mdb-card-body>
