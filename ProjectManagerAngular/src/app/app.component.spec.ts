@@ -12,6 +12,8 @@ import { RouterModule } from '@angular/router';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AddUserComponent } from './add-user/add-user.component';
+import { AddProjectComponent } from './add-project/add-project.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -32,21 +34,23 @@ describe('AppComponent', () => {
         AppComponent,
         AddTaskComponent,
         ViewTaskComponent,
-        UpdateTaskComponent
+        UpdateTaskComponent,
+        AddUserComponent,
+        AddProjectComponent
       ],
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  });
+   it('should create the app', () => {
+     const fixture = TestBed.createComponent(AppComponent);
+     const app = fixture.debugElement.componentInstance;
+     expect(app).toBeTruthy();
+   });
 
   it(`should have as title 'Project Manager'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('Project Manager');
+    expect(app.title).toEqual('ProjectManager');
   });
 
   // it('should render title in a h1 tag', () => {

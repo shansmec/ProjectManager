@@ -8,7 +8,7 @@ import { NgSelectConfig } from '@ng-select/ng-select';
 })
 export class AppComponent {
 
-  title = 'Project Manager';
+  title = 'ProjectManager';
 
   constructor() {
     
