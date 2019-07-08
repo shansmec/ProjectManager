@@ -4,6 +4,7 @@ import { Task } from '../task';
 import { TaskService } from '../task.service';
 import { ParentTask } from '../parent-task';
 import { Router } from '@angular/router';
+import { Project } from '../project';
 
 @Component({
   selector: 'app-add-task',
@@ -17,33 +18,56 @@ export class AddTaskComponent implements OnInit {
   public start: string = new Date().toISOString().split('T')[0];
   public end: string = new Date().toISOString().split('T')[0];
   public availableParentTasks!: ParentTask[];
+  public availableProjectsToLoad!: ParentTask[];
   public selectedParent: string;
   defaultSliderValue: number = 5;
-  public addTaskButtonName :string ="Add Task";
+  public addTaskButtonName: string = "Add Task";
   options: Options = {
     floor: 0,
     ceil: 30
   };
+  public availableProjects!: Project[];
+  public selectedProjectId: number = 0;
 
-  constructor(private taskService: TaskService, private router: Router, private cdr:ChangeDetectorRef) {
+  constructor(private taskService: TaskService, private router: Router, private cdr: ChangeDetectorRef) {
     this._taskService = taskService;
     this.getAllParentTasks();
   };
 
   ngOnInit() {
+    this.getAllParentTasks();
     this.getTaskDetails();
+    this.searchProjects();
+  }
+
+  searchProjects() {
+    this._taskService.getAllProjects().subscribe(
+      lstResults => {
+        this.setProjects(lstResults);
+      }
+    );
+  }
+
+  private setProjects(lstResults: Project[]) {
+    let result: Project[] = lstResults;
+    this.availableProjects = result;
+    this.availableProjectsToLoad = new Array();
+    this.availableProjects.forEach(element => {
+      this.availableProjectsToLoad.push({ ParentId: element.ProjectId, ParentTaskName: element.Name });
+    });
+    console.log(this.availableProjectsToLoad);
   }
 
   getTaskDetails() {
     let id = window.top.location.href.split("?TaskId=")[1];
     if (id === "0" || id === undefined) {
-      this.addTaskButtonName="Add Task";
+      this.addTaskButtonName = "Add Task";
       return;
     }
     this._taskService.getTask(parseInt(id)).subscribe(
       result => {
         this.setTaskDetails(result);
-        this.addTaskButtonName="Update Task";
+        this.addTaskButtonName = "Update Task";
       }
     );
   }
@@ -62,6 +86,12 @@ export class AddTaskComponent implements OnInit {
     );
   }
 
+  onProjectChange(event) {
+    this.addTask.ProjectId = event;
+    console.log(this.addTask.ProjectId);
+  }
+
+
   saveTask() {
     this._taskService.addTask(this.addTask).subscribe(
       result => {
@@ -70,5 +100,5 @@ export class AddTaskComponent implements OnInit {
       }
     );
   }
-  reset(){}
+  reset() { }
 }

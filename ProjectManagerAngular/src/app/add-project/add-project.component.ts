@@ -40,6 +40,7 @@ export class AddProjectComponent implements OnInit {
   getProjectDetails(projectId: any) {
     this._taskService.getProject(parseInt(projectId)).subscribe(
       result => {
+        console.log(result);
         this.addProject = result;
         this.start = result.StartDate;
         this.end = result.EndDate;

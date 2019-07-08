@@ -26,7 +26,8 @@ namespace TaskManagerApi.Controllers
                     StartDate = task.Start_Date.ToString("dd/MM/yyyy"),
                     Priority = task.Priority,
                     TaskId = task.Task_ID,
-                    ParentTaskName = task.Parent__ID == null ? "" : taskManagerBL.ReadParentTask(task.Parent__ID).Parent_Task
+                    ParentTaskName = task.Parent__ID == null ? "" : taskManagerBL.ReadParentTask(task.Parent__ID).Parent_Task,
+                    ProjectId=task.Project_ID
                 });
             }
             return lstTask;
@@ -84,7 +85,9 @@ namespace TaskManagerApi.Controllers
                 Parent__ID = task.ParentId,
                 Priority = task.Priority,
                 End_Date = Convert.ToDateTime(task.EndDate),
-                Start_Date = Convert.ToDateTime(task.StartDate)
+                Start_Date = Convert.ToDateTime(task.StartDate),
+                Project_ID= task.ProjectId,
+                
             });
         }
 
